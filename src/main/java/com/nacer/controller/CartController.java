@@ -1,9 +1,11 @@
 package com.nacer.controller;
 import com.nacer.model.Cart;
 import com.nacer.model.CartItem;
+import com.nacer.model.User;
 import com.nacer.request.AddCartItemRequest;
 import com.nacer.request.UpdateCartItemRequest;
 import com.nacer.service.CartService;
+import com.nacer.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,8 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
+    @Autowired
+    private UserService userService;
     @PutMapping("/cart/add")
     public ResponseEntity<CartItem> addItemToCart(@RequestBody AddCartItemRequest req,
                                                   @RequestHeader("Autorization") String jwt) throws Exception {
@@ -48,8 +52,9 @@ public class CartController {
     public ResponseEntity<Cart> clearCart(
 
              @RequestHeader("Autorization") String jwt) throws Exception {
+        User user=userService.findUserByJwtToken(jwt);
 
-        Cart cart=cartService.clearCart(jwt);
+        Cart cart=cartService.clearCart(user.getId());
         return new ResponseEntity<>(cart, HttpStatus.OK);
     }
 
@@ -57,8 +62,9 @@ public class CartController {
     public ResponseEntity<Cart> findUserCart(
 
             @RequestHeader("Autorization") String jwt) throws Exception {
+        User user=userService.findUserByJwtToken(jwt);
 
-        Cart cart=cartService.findCartByUserId(jwt);
+        Cart cart=cartService.findCartByUserId(user.getId());
         return new ResponseEntity<>(cart, HttpStatus.OK);
     }
 }
