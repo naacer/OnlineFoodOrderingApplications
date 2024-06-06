@@ -26,7 +26,7 @@ public class JwtProvider {
                 .claim("authorities",roles)
                 .signWith(key)
                 .compact();
-        return null;
+        return jwt;
     }
 
     public String getEmailFromJwtToken(String jwt){
@@ -45,6 +45,8 @@ public class JwtProvider {
             auths.add(authority.getAuthority());
 
         }
+
         return String.join(",",auths);
+
     }
 }

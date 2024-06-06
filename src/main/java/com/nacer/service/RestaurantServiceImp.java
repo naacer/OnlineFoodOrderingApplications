@@ -39,7 +39,7 @@ public class RestaurantServiceImp implements RestaurantService{
         restaurant.setDescription(req.getDescription());
         restaurant.setImages(req.getImages());
         restaurant.setName(req.getName());
-        restaurant.setOpeningHours(req.getOpningHours());
+        restaurant.setOpeningHours(req.getOpeningHours());
         restaurant.setRegistrationDate(LocalDateTime.now());
         restaurant.setOwner(user);
 
@@ -111,7 +111,7 @@ public class RestaurantServiceImp implements RestaurantService{
         RestaurantDto dto= new RestaurantDto();
         dto.setDescription(restaurant.getDescription());
         dto.setImages(restaurant.getImages());
-        dto.setTitle(restaurant.getName());
+        dto.setName(restaurant.getName());
         dto.setId(restaurantId);
 
         boolean isFavorited= false;

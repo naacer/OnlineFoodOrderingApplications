@@ -22,7 +22,7 @@ public class CartController {
     private UserService userService;
     @PutMapping("/cart/add")
     public ResponseEntity<CartItem> addItemToCart(@RequestBody AddCartItemRequest req,
-                                                  @RequestHeader("Autorization") String jwt) throws Exception {
+                                                  @RequestHeader("Authorization") String jwt) throws Exception {
 
         CartItem cartItem=cartService.addItemToCart(req, jwt);
         return new ResponseEntity<>(cartItem, HttpStatus.OK);
@@ -32,16 +32,16 @@ public class CartController {
     @PutMapping("/cart-item/update")
     public ResponseEntity<CartItem> updateCartItemQuantity
             (@RequestBody UpdateCartItemRequest req,
-                                                  @RequestHeader("Autorization") String jwt) throws Exception {
+                                                  @RequestHeader("Authorization") String jwt) throws Exception {
 
         CartItem cartItem=cartService.updateCartItemQuantity(req.getCartItemId(), req.getQuantity());
         return new ResponseEntity<>(cartItem, HttpStatus.OK);
     }
 
-    @PutMapping("/cart-item/{id}/remove")
+    @DeleteMapping("/cart-item/{id}/remove")
     public ResponseEntity<Cart> removeCartItem
             (@PathVariable Long id,
-             @RequestHeader("Autorization") String jwt) throws Exception {
+             @RequestHeader("Authorization") String jwt) throws Exception {
 
         Cart cart=cartService.removeItemFromCart(id,jwt);
         return new ResponseEntity<>(cart, HttpStatus.OK);
@@ -51,7 +51,7 @@ public class CartController {
     @PutMapping("/cart/clear")
     public ResponseEntity<Cart> clearCart(
 
-             @RequestHeader("Autorization") String jwt) throws Exception {
+             @RequestHeader("Authorization") String jwt) throws Exception {
         User user=userService.findUserByJwtToken(jwt);
 
         Cart cart=cartService.clearCart(user.getId());
@@ -61,7 +61,7 @@ public class CartController {
     @GetMapping("/cart")
     public ResponseEntity<Cart> findUserCart(
 
-            @RequestHeader("Autorization") String jwt) throws Exception {
+            @RequestHeader("Authorization") String jwt) throws Exception {
         User user=userService.findUserByJwtToken(jwt);
 
         Cart cart=cartService.findCartByUserId(user.getId());
